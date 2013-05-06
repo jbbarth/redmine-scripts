@@ -45,7 +45,7 @@ echo "* Migrating database (can take some time)"
 rake db:migrate >/dev/null
 
 echo "* Loading default data (en)"
-REDMINE_LANG=en rake redmine:load_default_data
+REDMINE_LANG=en rake redmine:load_default_data >/dev/null
 
 echo "* Filesystem permissions"
 mkdir -p tmp tmp/pdf public/plugin_assets
