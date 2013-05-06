@@ -55,15 +55,17 @@ sudo chmod -R 755 files log tmp public/plugin_assets
 echo -n "* Testing installation: "
 rails runner "puts 'OK.'" 2>/dev/null
 
-echo "* Generating config for pow"
-ln -s $(pwd) ~/.pow/redmine.standard.$env
-cat > .powrc <<EOF
-if [ -f "$rvm_path/scripts/rvm" ] && [ -f ".rvmrc" ]; then
-  source "$rvm_path/scripts/rvm"
-  source ".rvmrc"
-fi
-#export RAILS_ENV=production
+if test -e ~/.pow; then
+  echo "* Generating config for pow"
+  ln -s $(pwd) ~/.pow/redmine.standard.$env
+  cat > .powrc <<EOF
+  if [ -f "$rvm_path/scripts/rvm" ] && [ -f ".rvmrc" ]; then
+    source "$rvm_path/scripts/rvm"
+    source ".rvmrc"
+  fi
+  #export RAILS_ENV=production
 EOF
+fi
 
 echo "* Finished!"
 echo
