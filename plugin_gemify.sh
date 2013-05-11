@@ -68,6 +68,10 @@ sed -i '' "/spec.description /s/TODO: Write a gem description/$description/" $na
 sed -i '' "/spec.summary /s/TODO: Write a gem summary/$description/" $name.gemspec
 sed -i '' "/spec.homepage /s#\"\"#\"https://github.com/jbbarth/$name\"#" $name.gemspec
 
+#adapt Gemfile
+echo "* Adapting Gemfile"
+sed -i '' "s/^gemspec$/gemspec :path => File.dirname(__FILE__)/" Gemfile
+
 #adapt init.rb for gem
 echo "* Adapting init.rb for gemification"
 (echo "require '$name/version'"; echo; cat init.rb) > init.rb.new; mv init.rb.new init.rb #<3 shell :/
