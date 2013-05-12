@@ -2,7 +2,7 @@
 
 cd $(dirname $0)/../
 
-for i in plugins/redmine_* public/themes/ministere; do
+for i in plugins/redmine_* p/redmine_* public/themes/ministere; do
   cd $i >/dev/null
   lines=$(git status --short|wc -l)
   if [ "$lines" -eq "0" ]; then

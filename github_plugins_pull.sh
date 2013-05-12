@@ -2,7 +2,7 @@
 
 cd $(dirname $0)/../
 
-for i in plugins/redmine_* public/themes/ministere; do
+for i in plugins/redmine_* p/redmine_* public/themes/ministere; do
   cd $i >/dev/null
   echo $i |tr 'a-z' 'A-Z'
   git checkout master
