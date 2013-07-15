@@ -58,9 +58,9 @@ EOF
 
 #adapt init.rb
 echo "* Adapting init.rb to our needs"
-sed -i '' "/^  author /s/.*/  author 'Jean-Baptiste BARTH'/" init.rb
-sed -i '' "/^  url /s#.*#  url 'https://github.com/jbbarth/$1'#" init.rb
-sed -i '' "/^  author_url /s/.*/  author_url 'jeanbaptiste.barth@gmail.com'/" init.rb
+sed -i'' "/^  author /s/.*/  author 'Jean-Baptiste BARTH'/" init.rb
+sed -i'' "/^  url /s#.*#  url 'https://github.com/jbbarth/$1'#" init.rb
+sed -i'' "/^  author_url /s/.*/  author_url 'jeanbaptiste.barth@gmail.com'/" init.rb
 
 #turn it into a gem
 echo "* Turning the plugin into a gem"
@@ -71,25 +71,25 @@ rmdir $1
 
 #adapt gemspec
 echo "* Adapting $1.gemspec"
-sed -i '' "/spec.authors /s/jbbarth/Jean-Baptiste Barth/" $1.gemspec
-sed -i '' "/spec.description /s/TODO: Write a gem description/$description/" $1.gemspec
-sed -i '' "/spec.summary /s/TODO: Write a gem summary/$description/" $1.gemspec
-sed -i '' "/spec.homepage /s#\"\"#\"https://github.com/jbbarth/$1\"#" $1.gemspec
+sed -i'' "/spec.authors /s/jbbarth/Jean-Baptiste Barth/" $1.gemspec
+sed -i'' "/spec.description /s#TODO: Write a gem description#$description#" $1.gemspec
+sed -i'' "/spec.summary /s#TODO: Write a gem summary#$description#" $1.gemspec
+sed -i'' "/spec.homepage /s#\"\"#\"https://github.com/jbbarth/$1\"#" $1.gemspec
 
 #adapt Gemfile
 echo "* Adapting Gemfile"
-sed -i '' "s/^gemspec$/gemspec :path => File.dirname(__FILE__)/" Gemfile
+sed -i'' "s/^gemspec$/gemspec :path => File.dirname(__FILE__)/" Gemfile
 
 #adapt init.rb for gem
 echo "* Adapting init.rb for gemification"
 (echo "require '$1/version'"; echo; cat init.rb) > init.rb.new; mv init.rb.new init.rb #<3 shell :/
 modulename=$(grep module lib/$1.rb |cut -d" " -f 2)
-sed -i '' "/^  version /s#.*#  version $modulename::VERSION#" init.rb
+sed -i'' "/^  version /s#.*#  version $modulename::VERSION#" init.rb
 
 #adapt redmine_xxx.rb
 echo "* Adapting lib/$1.rb for engine-ification"
-sed -i '' "/^end$/d" lib/$1.rb
-sed -i '' "/Your code goes here/d" lib/$1.rb
+sed -i'' "/^end$/d" lib/$1.rb
+sed -i'' "/Your code goes here/d" lib/$1.rb
 cat >> lib/$1.rb <<EOF
   # Run the classic redmine plugin initializer after rails boot
   class Plugin < ::Rails::Engine
