@@ -57,9 +57,9 @@ EOF
 
 #adapt init.rb
 echo "* Adapting init.rb to our needs"
-sed -i'' "/^  author /s/.*/  author 'Jean-Baptiste BARTH'/" init.rb
-sed -i'' "/^  url /s#.*#  url 'https://github.com/jbbarth/$1'#" init.rb
-sed -i'' "/^  author_url /s/.*/  author_url 'jeanbaptiste.barth@gmail.com'/" init.rb
+sed -i '' "/^  author /s/.*/  author 'Jean-Baptiste BARTH'/" init.rb
+sed -i '' "/^  url /s#.*#  url 'https://github.com/jbbarth/$1'#" init.rb
+sed -i '' "/^  author_url /s/.*/  author_url 'jeanbaptiste.barth@gmail.com'/" init.rb
 
 #git
 git init
