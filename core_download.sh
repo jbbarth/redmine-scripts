@@ -22,8 +22,10 @@ REDMINE_2_2_3=76771/redmine-2.2.3.tar.gz
 REDMINE_2_2_4=76863/redmine-2.2.4.tar.gz
 REDMINE_2_3_0=76867/redmine-2.3.0.tar.gz
 REDMINE_2_3_1=76933/redmine-2.3.1.tar.gz
+REDMINE_2_3_2=77023/redmine-2.3.2.tar.gz
+REDMINE_2_3_3=77138/redmine-2.3.3.tar.gz
 #latest
-LATEST=76933/redmine-2.3.1.tar.gz
+LATEST=77138/redmine-2.3.3.tar.gz
 
 #download
 rel=${1:-LATEST}
