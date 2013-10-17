@@ -36,13 +36,13 @@ test:
 EOF
 
 echo "* Installing gems (can take some time)"
-bundle install >/dev/null
+bundle install
 
 echo "* Generating secret token"
-rake generate_session_store >/dev/null 2>/dev/null
+bundle exec rake generate_session_store >/dev/null 2>/dev/null
 
 echo "* Migrating database (can take some time)"
-rake db:migrate >/dev/null
+bundle exec rake db:migrate >/dev/null
 
 echo "* Loading default data (en)"
 REDMINE_LANG=en rake redmine:load_default_data >/dev/null
