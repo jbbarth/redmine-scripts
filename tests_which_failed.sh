@@ -1,8 +1,6 @@
 #!/bin/bash
-
 cd $(dirname $0)/..
-lastlog=$(ls log/test-all-* | tail -n 1)
-grep -o '\[.*\]:$' "$lastlog" | \
+grep -o '\[.*\]:$' "$(./script/tests_last_log_all.sh)" | \
   perl -pe 's/\[([^:]+):.*/\1/' | \
   sed -e "s#$(pwd)/##" | \
   sort -u
