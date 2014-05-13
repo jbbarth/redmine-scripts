@@ -36,6 +36,14 @@ test:
 EOF
 
 echo "* Installing gems (can take some time)"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if which Magick-config >/dev/null 2>/dev/null; then
+    export C_INCLUDE_PATH=$(Magick-config --prefix)/include/ImageMagick-6/
+    export PKG_CONFIG_PATH=$(Magick-config --prefix)/lib/pkgconfig/
+  else
+    echo "Error: cannot find Magick-config, maybe you should install imagemagick with: brew install imagemagick"
+  fi
+fi
 bundle install
 
 echo "* Generating secret token"
