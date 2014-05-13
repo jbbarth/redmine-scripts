@@ -11,11 +11,11 @@ cd $1/
 echo "* Verifying if it's a redmine directory"
 test -e lib/redmine.rb || (echo "Error: not a redmine directory !!" && exit 1)
 
-echo "* Creating a RVM environment for this release (1.9.3@$env)"
+echo "* Creating a RVM environment for this release (2.0.0@$env)"
 set +e
 rm -f .rvmrc*
 source "${rvm_path:-/usr/local/rvm}/scripts/rvm"
-rvm 1.9.3@$env --rvmrc --create
+rvm 2.0.0@$env --rvmrc --create
 set -e
 rvm_setup_ok=$(rvm gemset list |grep =|grep redmine|wc -l)
 [ $rvm_setup_ok -eq 0 ] && echo "Error: rvm setup probably failed !! Exiting." && exit 1
