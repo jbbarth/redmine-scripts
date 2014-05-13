@@ -38,8 +38,9 @@ echo "* Downloading $(basename $url)"
 wget --quiet "$url" -O /tmp/redmine.tgz
 
 #unpack
-echo "* Unpacking archive"
-to=${2:-redmine}
+to=$2
+[ -z "$to" ] && to=$(echo $url|awk -F'/' '{print $NF}'|sed 's/.tar.gz$/-blank/') # => redmine-X.X.X-blank
+echo "* Unpacking archive to $to/"
 dirname=$(tar -tf /tmp/redmine.tgz |head -n 1|cut -d"/" -f 1)
 tar xzf /tmp/redmine.tgz
 mv $dirname $to
