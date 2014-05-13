@@ -13,9 +13,9 @@ test -e lib/redmine.rb || (echo "Error: not a redmine directory !!" && exit 1)
 
 echo "* Creating a RVM environment for this release (2.0.0@$env)"
 set +e
-rm -f .rvmrc*
+rm -f .rvmrc* .ruby-version* .ruby-gemset*
 source "${rvm_path:-/usr/local/rvm}/scripts/rvm"
-rvm 2.0.0@$env --rvmrc --create
+rvm 2.0.0@$env --ruby-version --create
 set -e
 rvm_setup_ok=$(rvm gemset list |grep =|grep redmine|wc -l)
 [ $rvm_setup_ok -eq 0 ] && echo "Error: rvm setup probably failed !! Exiting." && exit 1
@@ -67,11 +67,15 @@ if test -e ~/.pow; then
   echo "* Generating config for pow"
   ln -s $(pwd) ~/.pow/redmine.standard.$env
   cat > .powrc <<EOF
-  if [ -f "$rvm_path/scripts/rvm" ] && [ -f ".rvmrc" ]; then
-    source "$rvm_path/scripts/rvm"
-    source ".rvmrc"
+if [ -f "$rvm_path/scripts/rvm" ] && [ -f ".ruby-version" ]; then
+  source "$rvm_path/scripts/rvm"
+   if [ -f ".ruby-gemset" ]; then
+    rvm use \$(cat .ruby-version)@\$(cat .ruby-gemset)
+  else
+    rvm use \$(cat .ruby-version)
   fi
-  #export RAILS_ENV=production
+fi
+#export RAILS_ENV=production
 EOF
 fi
 
