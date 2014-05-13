@@ -42,8 +42,16 @@ to=$2
 [ -z "$to" ] && to=$(echo $url|awk -F'/' '{print $NF}'|sed 's/.tar.gz$/-blank/') # => redmine-X.X.X-blank
 echo "* Unpacking archive to $to/"
 dirname=$(tar -tf /tmp/redmine.tgz |head -n 1|cut -d"/" -f 1)
-tar xzf /tmp/redmine.tgz
-mv $dirname $to
+if [ -e "$dirname" ]; then
+  echo "Error: $dirname already exists, not doing anything" >&2
+else
+  tar xzf /tmp/redmine.tgz
+  if [ -e "$to" ]; then
+    echo "Warning: $to already exists, leaving $dirname as is" >&2
+  else
+    mv $dirname $to
+  fi
+fi
 
 #cleanup
 echo "* Cleaning download file"
