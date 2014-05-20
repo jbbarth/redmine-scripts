@@ -20,8 +20,9 @@ set -e
 rvm_setup_ok=$(rvm gemset list |grep =|grep redmine|wc -l)
 [ $rvm_setup_ok -eq 0 ] && echo "Error: rvm setup probably failed !! Exiting." && exit 1
 
-echo "* Creating config/database.yml"
-cat > config/database.yml <<EOF
+if ! test -e config/database.yml; then
+  echo "* Creating config/database.yml"
+  cat > config/database.yml <<EOF
 production:
   adapter: sqlite3
   database: db/redmine.sqlite3
@@ -34,6 +35,9 @@ test:
   adapter: sqlite3
   database: db/test.sqlite3
 EOF
+else
+  echo "* Skipping config/database.yml (already exists)"
+fi
 
 echo "* Installing gems (can take some time)"
 if [[ "$OSTYPE" == "darwin"* ]]; then
