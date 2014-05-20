@@ -4,7 +4,7 @@ set -e
 #empty?
 [ -z "$1" ] && echo "Please give me a directory where to find a redmine archive !" >&2 && exit 1
 
-env=$(basename $1)
+env=$(basename $1|sed 's/-blank$//')
 
 cd $1/
 
