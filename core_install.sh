@@ -84,6 +84,8 @@ EOF
 fi
 
 echo "* Finished!"
-echo
-echo "  Browse to http://redmine.standard.$env.dev/"
+if test -e ~/.pow; then
+  echo
+  echo "  Browse to http://redmine.standard.$env.dev/"
+fi
 echo
