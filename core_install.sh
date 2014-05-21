@@ -61,7 +61,9 @@ REDMINE_LANG=en rake redmine:load_default_data >/dev/null
 
 echo "* Filesystem permissions"
 mkdir -p tmp tmp/pdf public/plugin_assets
-sudo chown -R jbbarth:staff files log tmp public/plugin_assets
+user=$(getent passwd www-data >/dev/null && echo "www-data" || id -un)
+group=$(id -gn)
+sudo chown -R $user:$group files log tmp public/plugin_assets
 sudo chmod -R 755 files log tmp public/plugin_assets
 
 echo -n "* Testing installation: "
