@@ -48,6 +48,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Error: cannot find Magick-config, maybe you should install imagemagick with: brew install imagemagick"
   fi
 fi
+
+which bundle >/dev/null || gem install bundler
+
 bundle install
 
 echo "* Generating secret token"
