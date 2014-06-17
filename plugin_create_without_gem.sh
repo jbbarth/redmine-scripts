@@ -11,7 +11,7 @@ read description
 
 #Plugin generation
 echo "* Generating a new plugin $1"
-rails g redmine_plugin $1 >/dev/null 2>&1
+rails g redmine_plugin $1 >/dev/null
 cd plugins/$1
 
 #Remove empty things + locales
