@@ -39,6 +39,14 @@ else
   echo "* Skipping config/database.yml (already exists)"
 fi
 
+if ! which Magick-config >/dev/null; then
+  if which lsb_release && [[ "$(lsb_release -si)" == "Debian" ]]; then
+    echo "* Installing 'libmagickwand-dev' package for Debian"
+    sudo apt-get install libmagickwand-dev
+  fi
+fi
+
+
 echo "* Installing gems (can take some time)"
 if [[ "$OSTYPE" == "darwin"* ]]; then
   if which Magick-config >/dev/null 2>/dev/null; then
