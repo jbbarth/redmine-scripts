@@ -42,7 +42,7 @@ fi
 if ! which Magick-config >/dev/null; then
   if which lsb_release && [[ "$(lsb_release -si)" == "Debian" ]]; then
     echo "* Installing 'libmagickwand-dev' package for Debian"
-    sudo apt-get install libmagickwand-dev
+    sudo apt-get install -y libmagickwand-dev
   fi
 fi
 
