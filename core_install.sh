@@ -59,7 +59,7 @@ fi
 
 which bundle >/dev/null || gem install bundler
 
-bundle install
+bundle check || bundle install
 
 echo "* Generating secret token"
 bundle exec rake generate_session_store >/dev/null 2>/dev/null
