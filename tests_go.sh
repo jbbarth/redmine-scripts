@@ -1,7 +1,7 @@
 #!/bin/bash
 cd $(dirname $0)/..
 
-./script/tests_prepare.sh
+./script/tests_prepare.sh >/dev/null
 ./script/tests_run_all.sh|tee log/test-all-$(date +'%Y%m%d-%H%M').log
 
 echo
