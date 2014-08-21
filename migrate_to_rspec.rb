@@ -124,6 +124,7 @@ unless ENV["FORCE"] == "yes" || (print "Confirmed? [O/n] "; $stdout.flush; $stdi
 end
 
 puts "* Moving tests from test/ to spec/"
+FileUtils.mkdir_p("spec")
 prepare_file_and_directories(Dir.new("test"), Dir.new("spec"))
 
 puts "* Converting syntax to rspec"
