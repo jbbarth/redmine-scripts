@@ -32,7 +32,7 @@ def convert_test_unit_file_to_rspec(file)
   modules_to_include = nil
   begin
     lines = File.readlines(file)
-    render_views = lines.any?{|l|l.match /assert_tag|response.body|assert_select/}
+    render_views = lines.any?{|l|l.match /assert_tag|response.body|assert_select/} && !lines.any?{|l|l.match /IntegrationTest/}
     lines.each do |line|
       line.chomp!
       indentation = line.scan(/^(\s*)/)[0][0]
@@ -71,7 +71,7 @@ def convert_test_unit_file_to_rspec(file)
       elsif line =~ %r{^\s*should\s+([^"'].*)} #shoulda syntax...
         tmp.print indentation
         tmp.puts "xit \"should be converted manually: #{$1.gsub('"', '\\"')}\""
-      elsif line =~ %r[(?:test|should) "(.+)"(.*)]
+      elsif line =~ %r{(?:test|should) ['"](.+)['"](.*)}
         tmp.print indentation
         tmp.puts "it \"should #{$1}\"#{$2}"
       elsif line =~ %r[assert_response :success]
@@ -90,16 +90,17 @@ def convert_test_unit_file_to_rspec(file)
         #cut things the best way possible
         a = $1
         a =~ /^(\S+\(.*?\)),\s+(.+)$/ ||    #assert_equal Date.new(1, 2, 3), blabla
+          a =~ /^(\[.*?\]),\s+(.+)$/ ||     #assert_equal [a, b, c], blabla
           a =~ /^(".+?"),\s+(.+)$/ ||       #assert_equal "admin, jsmith", blabla
           a =~ /^(.+?),\s+(.+)$/
         m1, m2 = $1, $2
         #check for errors
         raise "not implemented: m1 or m2 are nil (really)" if m1.nil? || m2.nil?
-        raise "not implemented: m1 or m2 looks to be 'nil'" if m1.match(/nil/) or m2.match(/nil/)
+        raise "not implemented: m2 shouldn't be 'nil'" if m2.match(/nil/)
         #then go transform
         tmp.print indentation
         tmp.puts "#{m2}.should == #{m1}"
-      elsif line =~ %r[assert assigns\(:(.*?)\)$]
+      elsif line =~ %r[assert assigns\(:([^\) ]*)\)$]
         tmp.print indentation
         tmp.puts "assigns[:#{$1}].should be_true"
       else
@@ -136,6 +137,8 @@ puts "* We may run the rspec suite now"
 if ENV["RUN"] == "yes" || (print "Confirmed? [O/n] "; $stdout.flush; $stdin.gets.chomp! =~ /^o$/i)
   dir = File.expand_path(Dir.pwd)
   Dir.chdir("../..") do
-    puts %x(rspec -Iplugins/redmine_base_rspec/spec #{dir})
+    cmd = %(rspec -Iplugins/redmine_base_rspec/spec #{dir})
+    puts "cmd: #{cmd}"
+    puts %x(#{cmd})
   end
 end
