@@ -131,3 +131,11 @@ puts "* Converting syntax to rspec"
 Dir.glob("spec/**/*").each do |path|
   convert_test_unit_file_to_rspec(path) if path.match /(spec_helper|_spec)\.rb$/
 end
+
+puts "* We may run the rspec suite now"
+if ENV["RUN"] == "yes" || (print "Confirmed? [O/n] "; $stdout.flush; $stdin.gets.chomp! =~ /^o$/i)
+  dir = File.expand_path(Dir.pwd)
+  Dir.chdir("../..") do
+    puts %x(rspec -Iplugins/redmine_base_rspec/spec #{dir})
+  end
+end
