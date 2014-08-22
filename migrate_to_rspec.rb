@@ -35,12 +35,17 @@ def convert_test_unit_file_to_rspec(file)
     render_views = lines.any?{|l|l.match /assert_tag|response.body|assert_select/} && !lines.any?{|l|l.match /IntegrationTest/}
     lines.each do |line|
       line.chomp!
+      line.gsub!(/\s+$/, "")
       indentation = line.scan(/^(\s*)/)[0][0]
       if line =~ %r[^(\s*#.*)$] #comments
         tmp.puts $1
       elsif line =~ %r[require.*?test_helper]
         if !file.match /spec_helper/
-          tmp.puts line.gsub("test_helper", "spec_helper")
+          if $should_keep_spec_helper
+            tmp.puts line.gsub("test_helper", "spec_helper")
+          else
+            tmp.puts %(require "spec_helper")
+          end
           if lines.any?{|l| l.match /assert_(no_)?difference/}
             tmp.puts %[require "active_support/testing/assertions"]
             modules_to_include = "include ActiveSupport::Testing::Assertions"
@@ -94,6 +99,7 @@ def convert_test_unit_file_to_rspec(file)
           a =~ /^(".+?"),\s+(.+)$/ ||       #assert_equal "admin, jsmith", blabla
           a =~ /^(.+?),\s+(.+)$/
         m1, m2 = $1, $2
+        m2 = "(#{m2})" if m2 =~ /\S\s+\S/
         #check for errors
         raise "not implemented: m1 or m2 are nil (really)" if m1.nil? || m2.nil?
         raise "not implemented: m2 shouldn't be 'nil'" if m2.match(/nil/)
@@ -118,6 +124,8 @@ def convert_test_unit_file_to_rspec(file)
   end
 end
 
+dir = File.expand_path(Dir.pwd)
+
 puts "* Migrating tests from #{Dir.pwd}"
 unless ENV["FORCE"] == "yes" || (print "Confirmed? [O/n] "; $stdout.flush; $stdin.gets.chomp! =~ /^o$/i)
   puts "exiting..."
@@ -128,6 +136,17 @@ puts "* Moving tests from test/ to spec/"
 FileUtils.mkdir_p("spec")
 prepare_file_and_directories(Dir.new("test"), Dir.new("spec"))
 
+puts "* Adjusting spec_helper"
+spec_helper = "spec/spec_helper.rb"
+$should_keep_spec_helper = true
+if File.exists?(spec_helper)
+  lines = File.readlines(spec_helper)
+  if lines.size == 2 && lines[0] =~ /^#.*/ && lines[1] =~ /test_helper/
+    $should_keep_spec_helper = false
+    FileUtils.rm(spec_helper)
+  end
+end
+
 puts "* Converting syntax to rspec"
 Dir.glob("spec/**/*").each do |path|
   convert_test_unit_file_to_rspec(path) if path.match /(spec_helper|_spec)\.rb$/
@@ -135,7 +154,6 @@ end
 
 puts "* We may run the rspec suite now"
 if ENV["RUN"] == "yes" || (print "Confirmed? [O/n] "; $stdout.flush; $stdin.gets.chomp! =~ /^o$/i)
-  dir = File.expand_path(Dir.pwd)
   Dir.chdir("../..") do
     cmd = %(rspec -Iplugins/redmine_base_rspec/spec #{dir})
     puts "cmd: #{cmd}"
