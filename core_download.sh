@@ -26,9 +26,14 @@ REDMINE_2_4_1=http://www.redmine.org/releases/redmine-2.4.1.tar.gz
 REDMINE_2_4_2=http://www.redmine.org/releases/redmine-2.4.2.tar.gz
 REDMINE_2_4_3=http://www.redmine.org/releases/redmine-2.4.3.tar.gz
 REDMINE_2_4_4=http://www.redmine.org/releases/redmine-2.4.4.tar.gz
+REDMINE_2_4_5=http://www.redmine.org/releases/redmine-2.4.5.tar.gz
+REDMINE_2_4_6=http://www.redmine.org/releases/redmine-2.4.6.tar.gz
+REDMINE_2_4_7=http://www.redmine.org/releases/redmine-2.4.7.tar.gz
 REDMINE_2_5_0=http://www.redmine.org/releases/redmine-2.5.0.tar.gz
 REDMINE_2_5_1=http://www.redmine.org/releases/redmine-2.5.1.tar.gz
 REDMINE_2_5_2=http://www.redmine.org/releases/redmine-2.5.2.tar.gz
+REDMINE_2_5_3=http://www.redmine.org/releases/redmine-2.5.3.tar.gz
+REDMINE_2_6_0=http://www.redmine.org/releases/redmine-2.6.0.tar.gz
 #latest
 LATEST=$REDMINE_2_5_2
 
