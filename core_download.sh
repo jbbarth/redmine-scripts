@@ -34,8 +34,9 @@ REDMINE_2_5_1=http://www.redmine.org/releases/redmine-2.5.1.tar.gz
 REDMINE_2_5_2=http://www.redmine.org/releases/redmine-2.5.2.tar.gz
 REDMINE_2_5_3=http://www.redmine.org/releases/redmine-2.5.3.tar.gz
 REDMINE_2_6_0=http://www.redmine.org/releases/redmine-2.6.0.tar.gz
+REDMINE_2_6_1=http://www.redmine.org/releases/redmine-2.6.1.tar.gz
 #latest
-LATEST=$REDMINE_2_6_0
+LATEST=$REDMINE_2_6_1
 
 #download
 rel=${1:-LATEST}
