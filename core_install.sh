@@ -15,7 +15,7 @@ echo "* Creating a RVM environment for this release (2.1.4@$env)"
 set +e
 rm -f .rvmrc* .ruby-version* .ruby-gemset*
 source "${rvm_path:-/usr/local/rvm}/scripts/rvm"
-rvm 2.1.4@$env --ruby-version --create
+rvm 2.2.3@$env --ruby-version --create
 set -e
 rvm_setup_ok=$(rvm gemset list |grep =|grep redmine|wc -l)
 [ $rvm_setup_ok -eq 0 ] && echo "Error: rvm setup probably failed !! Exiting." && exit 1
