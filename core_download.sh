@@ -40,8 +40,9 @@ REDMINE_3_0_0=http://www.redmine.org/releases/redmine-3.0.0.tar.gz
 REDMINE_3_0_3=http://www.redmine.org/releases/redmine-3.0.3.tar.gz
 REDMINE_3_0_4=http://www.redmine.org/releases/redmine-3.0.4.tar.gz
 REDMINE_3_1_0=http://www.redmine.org/releases/redmine-3.1.0.tar.gz
+REDMINE_3_1_1=http://www.redmine.org/releases/redmine-3.1.1.tar.gz
 #latest
-LATEST=$REDMINE_3_1_0
+LATEST=$REDMINE_3_1_1
 
 #download
 rel=${1:-LATEST}

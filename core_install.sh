@@ -11,7 +11,7 @@ cd $1/
 echo "* Verifying if it's a redmine directory"
 test -e lib/redmine.rb || (echo "Error: not a redmine directory !!" && exit 1)
 
-echo "* Creating a RVM environment for this release (2.1.4@$env)"
+echo "* Creating a RVM environment for this release (2.2.3@$env)"
 set +e
 rm -f .rvmrc* .ruby-version* .ruby-gemset*
 source "${rvm_path:-/usr/local/rvm}/scripts/rvm"
